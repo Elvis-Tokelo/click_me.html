@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Be My Valentine 💖</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    #page1, #page2 {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #page1 {
+      display: flex;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+      position: relative;
+    }
+
+    button {
+      font-size: 1.5rem;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #yesBtn {
+      background-color: #ff4d6d;
+      color: white;
+    }
+
+    #noBtn {
+      background-color: #555;
+      color: white;
+      position: absolute;
+      right: -120px;
+    }
+
+    /* Page 2 */
+    #page2 h1 {
+      color: white;
+      font-size: 3.5rem;
+    }
+
+    #page2 img {
+      max-width: 300px;
+      border-radius: 20px;
+      margin-top: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      animation: float 4s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(100vh);
+      }
+      to {
+        transform: translateY(-10vh);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1 -->
+  <div id="page1">
+    <h1>Will you be my Valentine? 💘</h1>
+    <div class="buttons">
+      <button id="yesBtn" onclick="yesClicked()">Yes 💖</button>
+      <button id="noBtn" onclick="noClicked()">No 😢</button>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div id="page2">
+    <h1>YAY!!! 💖💖💖</h1>
+    <h3>You’re my Valentine 🥰</h3>
+    <img src="us.JPEG" alt="Us together">
+  </div>
+
+  <!-- Optional music -->
+  <audio id="music" src="love.mp3"></audio>
+
+  <script>
+    let yesScale = 1;
+
+    function noClicked() {
+      yesScale += 0.4;
+      const yesBtn = document.getElementById("yesBtn");
+      const noBtn = document.getElementById("noBtn");
+
+      yesBtn.style.transform = `scale(${yesScale})`;
+
+      // Move "No" randomly
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 200 - 100;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+
+      if (yesScale > 4) {
+        noBtn.style.display = "none";
+      }
+    }
+
+    function yesClicked() {
+      document.getElementById("page1").style.display = "none";
+      document.getElementById("page2").style.display = "flex";
+      document.body.style.background = "linear-gradient(135deg, #ff4d6d, #ff85a1)";
+      document.getElementById("music").play();
+      createHearts();
+    }
+
+    function createHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 5000);
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
